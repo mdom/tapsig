@@ -35,7 +35,7 @@ test_output(){
 	if cmp -s "$1" "$2";then
 		return 0
 	else
-		diff -u "$1" "$2" | sed 's/^/#  /'
+		diff -u "$1" "$2" | diag
 		return 1
 	fi
 }
@@ -62,6 +62,10 @@ call(){
 		$command "$@" > stdout 2> stderr
 	fi
 	rc=$?
+}
+
+diag(){
+	sed 's/^/# /'
 }
 
 input() { cat > input;  }
