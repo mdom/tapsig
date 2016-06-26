@@ -21,6 +21,12 @@ todo(){
 	todo=$1
 }
 
+depends_on(){
+	if ! command -v "$1";then
+		skip_all "$1 not installed."
+	fi
+}
+
 skip_all(){
 	clean_up
 	printf "1..0 # SKIP${1+ $1}\n"
