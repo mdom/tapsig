@@ -91,6 +91,11 @@ diag(){
 	sed 's/^/# /'
 }
 
+bail_out(){
+	printf "Bail out!${1+ $1}\n"
+	exit 0
+}
+
 input() { cat > input;  }
 stdin() { cat > stdin;  }
 stdout(){ cat > stdout_plan; }
