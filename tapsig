@@ -78,19 +78,11 @@ done_testing(){
 	exit 0
 }
 
-command() {
-	command=$1
-}
-
 call(){
-	if [ -z "$command" ];then
-		printf "Command is unset.\n" >&2
-		exit 1
-	fi
 	if [ -e input ];then
-		$command "$@" input > stdout 2> stderr
+		"$@" input > stdout 2> stderr
 	else
-		$command "$@" > stdout 2> stderr
+		"$@" > stdout 2> stderr
 	fi
 	rc=$?
 }
