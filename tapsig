@@ -16,6 +16,10 @@ skip(){
 	skip=$1
 }
 
+skip_all(){
+	clean_up
+	printf "1..0 # SKIP${1+ $1}\n"
+	exit 0
 }
 
 check_expections(){
