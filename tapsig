@@ -23,9 +23,13 @@ check_expections(){
 	fi
 }
 
-tap(){
+end_current_test(){
 	check_expections
 	clean_up
+}
+
+tap(){
+	end_current_test
 	touch stdout_plan stderr_plan
 	plan=$(( plan + 1 ))
 	description=$1
@@ -41,8 +45,7 @@ test_output(){
 }
 
 done_testing(){
-	check_expections
-	clean_up
+	end_current_test
 	printf "1..$plan\n"
 	exit 0
 }
