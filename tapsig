@@ -10,7 +10,8 @@ ok(){
 }
 
 not_ok(){
-	printf "not ok $plan $description\n";
+	printf "not ok $plan $description\n"
+}
 
 skip(){
 	skip=$1
