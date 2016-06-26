@@ -11,6 +11,11 @@ ok(){
 
 not_ok(){
 	printf "not ok $plan $description\n";
+
+skip(){
+	skip=$1
+}
+
 }
 
 check_expections(){
@@ -24,7 +29,12 @@ check_expections(){
 }
 
 end_current_test(){
-	check_expections
+	if [ -n "$skip" ];then
+		printf "ok $plan # SKIP $skip\n"
+		skip=""
+	else
+		check_expections
+	fi
 	clean_up
 }
 
