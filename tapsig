@@ -16,6 +16,10 @@ skip(){
 	skip=$1
 }
 
+todo(){
+	todo=$1
+}
+
 skip_all(){
 	clean_up
 	printf "1..0 # SKIP${1+ $1}\n"
@@ -36,6 +40,9 @@ end_current_test(){
 	if [ -n "$skip" ];then
 		printf "ok $plan # SKIP $skip\n"
 		skip=""
+	elif [ -n "$todo" ];then
+		printf "not ok $plan # TODO $todo\n"
+		todo=""
 	else
 		check_expections
 	fi
