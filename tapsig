@@ -93,10 +93,11 @@ bail_out(){
 
 input() { cat > input;  }
 stdin() { cat > stdin;  }
-stdout(){ cat > stdout_plan; }
-stderr(){ cat > stderr_plan; }
 
-rc() { rc_plan=$1; }
+stdout_is(){ cat > stdout_plan; }
+stderr_is(){ cat > stderr_plan; }
+
+rc_is() { rc_plan=$1; }
 
 clean_up(){
 	rm -f input stdin stdout stderr expect stdout_plan stderr_plan;
