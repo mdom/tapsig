@@ -79,7 +79,11 @@ call(){
 }
 
 diag(){
-	sed 's/^/# /'
+	if [ -n "$1" ];then
+		printf "# $1\n"
+	else
+		sed 's/^/# /'
+	fi
 }
 
 bail_out(){
