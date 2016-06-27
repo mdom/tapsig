@@ -104,9 +104,14 @@ clean_up(){
 	rc_plan=0
 }
 
-test_file=$1
-shift
-
-if [ -e "$test_file" ];then
-	. "$test_file"
+if [ -e "$1" ];then
+	. "$1"
+	## this code should not be reached
+	if [ $plan -gt 0 ];then
+		printf "# Tests were run but done_testing() was not seen.\n" >&2
+		exit 1
+	fi
 fi
+
+exit 0
+
