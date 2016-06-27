@@ -43,21 +43,7 @@ check_expections(){
 	fi
 }
 
-end_current_test(){
-	if [ -n "$skip" ];then
-		printf "ok $plan # SKIP $skip\n"
-		skip=""
-	elif [ -n "$todo" ];then
-		printf "not ok $plan # TODO $todo\n"
-		todo=""
-	else
-		check_expections
-	fi
-	clean_up
-}
-
 tap(){
-	end_current_test
 	touch stdout_plan stderr_plan
 	plan=$(( plan + 1 ))
 	description=$1
@@ -73,18 +59,22 @@ test_output(){
 }
 
 done_testing(){
-	end_current_test
 	printf "1..$plan\n"
 	exit 0
 }
 
 call(){
-	if [ -e input ];then
-		"$@" input > stdout 2> stderr
+	if [ -n "$skip" ];then
+		printf "ok $plan # SKIP $skip\n"
+		skip=""
+	elif [ -n "$todo" ];then
+		printf "not ok $plan # TODO $todo\n"
+		todo=""
 	else
-		"$@" > stdout 2> stderr
+		rc=$?
+		check_expections
 	fi
-	rc=$?
+	clean_up
 }
 
 diag(){
