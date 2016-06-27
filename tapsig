@@ -71,6 +71,11 @@ call(){
 		printf "not ok $plan # TODO $todo\n"
 		todo=""
 	else
+		if [ -e stdin ];then
+			"$@" < stdin > stdout 2> stderr
+		else
+			"$@" > stdout 2> stderr
+		fi
 		rc=$?
 		check_expections
 	fi
