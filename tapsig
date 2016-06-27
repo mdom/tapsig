@@ -71,11 +71,7 @@ call(){
 		printf "not ok $plan # TODO $todo\n"
 		todo=""
 	else
-		if [ -e stdin ];then
-			"$@" < stdin > stdout 2> stderr
-		else
-			"$@" > stdout 2> stderr
-		fi
+		"$@" > stdout 2> stderr
 		rc=$?
 		check_expections
 	fi
@@ -91,16 +87,13 @@ bail_out(){
 	exit 0
 }
 
-input() { cat > input;  }
-stdin() { cat > stdin;  }
-
 stdout_is(){ cat > stdout_plan; }
 stderr_is(){ cat > stderr_plan; }
 
 rc_is() { rc_plan=$1; }
 
 clean_up(){
-	rm -f input stdin stdout stderr expect stdout_plan stderr_plan;
+	rm -f stdout stderr stdout_plan stderr_plan;
 	rc_plan=0
 }
 
