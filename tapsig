@@ -4,6 +4,7 @@ PATH=.:$PATH
 
 plan=0
 rc_plan=0
+tapsig_state="running"
 
 ok(){
 	printf "ok $plan${name+ $name}\n";
@@ -57,8 +58,7 @@ test_output(){
 }
 
 done_testing(){
-	printf "1..$plan\n"
-	exit 0
+	tapsig_state="done"
 }
 
 tap(){
@@ -102,6 +102,7 @@ clean_up(){
 }
 
 if [ -e "$1" ];then
+	current_dir=$(pwd)
 	work_dir="$HOME/.tapsig.$$"
 	if ! mkdir "$work_dir";then
 		printf "Can't create working directory $work_dir.\n" >&2
@@ -111,10 +112,18 @@ if [ -e "$1" ];then
 		printf "Can't cd into working directory $work_dir.\n" >&2
 		exit 1
 	fi
-	. "$1"
-	## this code should not be reached
-	if [ $plan -gt 0 ];then
+
+	. "$current_dir/$1"
+
+	rm -R "$work_dir"
+
+	if [ "$tapsig_state" = "done" ];then
+		printf "1..$plan\n"
+		exit 0
+	elif [ $plan -gt 0 ];then
 		printf "# Tests were run but done_testing() was not seen.\n" >&2
+		exit 1
+	else 
 		exit 1
 	fi
 fi
