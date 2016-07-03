@@ -102,6 +102,15 @@ clean_up(){
 }
 
 if [ -e "$1" ];then
+	work_dir="$HOME/.tapsig.$$"
+	if ! mkdir "$work_dir";then
+		printf "Can't create working directory $work_dir.\n" >&2
+		exit 1
+	fi
+	if ! cd $work_dir;then
+		printf "Can't cd into working directory $work_dir.\n" >&2
+		exit 1
+	fi
 	. "$1"
 	## this code should not be reached
 	if [ $plan -gt 0 ];then
