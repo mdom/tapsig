@@ -7,11 +7,11 @@ rc_plan=0
 tapsig_state="running"
 
 ok(){
-	printf "ok %i%s\n" "$plan" "${name+ $name}"
+	printf "ok %i%s%s\n" "$plan" "${name:+ $name}" "${todo:+ # TODO $todo}"
 }
 
 not_ok(){
-	printf "not ok %i%s\n" "$plan" "${name+ $name}"
+	printf "not ok %i%s%s\n" "$plan" "${name:+ $name}" "${todo:+ # TODO $todo}"
 }
 
 skip(){
@@ -76,10 +76,6 @@ tap(){
 	plan=$(( plan + 1 ))
 	if [ -n "$skip" ];then
 		printf "ok %i # SKIP $skip\n" "$plan"
-		skip=""
-	elif [ -n "$todo" ];then
-		printf "not ok %i # TODO %s\n" "$plan" "$todo"
-		todo=""
 	else
 		"$@" > stdout 2> stderr
 		rc=$?
@@ -116,6 +112,8 @@ clean_up(){
 		rm -f "$i" "${i%_plan}"
 	done
 	rc_plan=0
+	todo=""
+	skip=""
 	name=""
 }
 
