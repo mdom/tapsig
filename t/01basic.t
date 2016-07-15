@@ -42,6 +42,12 @@ EOI
 
 tap sh -c 'echo bar > foo'
 
+todo foo
+tap true
+
+todo bar
+tap false
+
 done_testing
 EOF
 
@@ -56,7 +62,9 @@ ok 5 file_is
 # ---
 # > bar
 not ok 6 file_is not identical
-1..6
+ok 7 # TODO foo
+not ok 8 # TODO bar
+1..8
 EOF
 
 tap "$current_dir/tapsig" tapsig01
