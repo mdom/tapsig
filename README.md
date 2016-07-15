@@ -49,6 +49,18 @@ done_testing
 As you can see from the last example, you can also add a name for a test that
 makes it easier to track a failing test.
 
+Testfiles are shell scripts, so you can just use anything you would use
+normally. Say you  want to test a command with a lot of options and only
+one option changes in every test.
+
+```
+set -- command --arg0 --arg1 --arg2
+
+for arg in --arg4,--arg5; do
+	tap "$@" "$arg"
+done
+```
+
 And finally, testfiles can contain more on just one test:
 
 ```
