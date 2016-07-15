@@ -8,6 +8,9 @@ name false
 rc_is 1
 tap false
 
+name "not ok"
+tap false
+
 name "false and stderr"
 
 cat > false_and_stderr <<EOI
@@ -29,8 +32,9 @@ EOF
 stdout_is <<EOF
 ok 1 true
 ok 2 false
-ok 3 false and stderr
-1..3
+not ok 3 not ok
+-ok 3 false and stderr
+1..4
 EOF
 
 tap "$current_dir/tapsig" tapsig01
