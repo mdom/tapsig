@@ -74,6 +74,66 @@ tap /bin/false
 done_testing
 ```
 
+## Available functions
+
+### tap _COMMAND_ [_ARGS_]...
+
+Calls _COMMAND_ and checks the predeclared expectations.
+
+### done\_testing
+
+Declares the end of tests. _tapsig_ will fail if this function isn't
+called at the end of the test file.
+
+### name _NAME_
+
+Sets the name for the next test.
+
+### rc\_is _RC_
+
+Sets the expected return code for the next tap command.
+
+### stdout\_is
+
+Reads the expected content of stdout for the the next tap command
+from stdin.
+
+### stderr\_is
+
+Reads the expected content of stderr for the the next tap command
+from stdin.
+
+### file\_is _FILE_
+
+Reads the expected content of _FILE_ for the the next tap command
+from stdin.
+
+### diag [_MESSAGE_]
+
+Prints a diagnostic message which is guaranteed not to interfere with test
+output. Either prints _MESSAGE_ or read the diagnostic output from stdin.
+
+### bail\_out [_REASON_]
+
+Indicates to the harness that things are going so badly all testing should terminate.
+
+### skip _REASON_
+
+Skips the current test. _tapsig_ will output special ok's which a harness
+interprets as skipped, but passing, tests.
+
+### todo _REASON_
+
+Declares that the next test is expected to fail. _tapsig_ will
+run the test normally, but print out a special flag indicating it is
+"todo". Harnesses will interpret failures as being ok.  Should anything
+succeed, it will report it as an unexpected success.  You then know the
+thing you had todo is done and can remove the function call.
+
+### depends\_on _COMMAND_
+
+Checks if _COMMAND_ is available and skips all tests otherwise.
+
 ## Author and Copyright
 
 Copyright (C) 2016 Mario Domgoergen
