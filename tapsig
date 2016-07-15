@@ -37,12 +37,20 @@ skip_all(){
 # shellcheck disable=SC2015
 check_expections(){
 	if [ "$plan" != 0 ];then
-		test_output stderr_plan stderr &&
-		test_output stdout_plan stdout &&
+		test_files &&
 		[ "${rc-0}" -eq "$rc_plan" ] &&
 		ok ||
 		not_ok
 	fi
+}
+
+test_files(){
+	for i in *_plan;do
+		if ! test_output "$i" "${i%_plan}";then
+			return 1
+		fi
+	done
+	return 0
 }
 
 name(){
@@ -97,10 +105,16 @@ bail_out(){
 stdout_is(){ cat > stdout_plan; }
 stderr_is(){ cat > stderr_plan; }
 
+file_is() {
+	cat > "$1_plan"
+}
+
 rc_is() { rc_plan=$1; }
 
 clean_up(){
-	rm -f stdout stderr stdout_plan stderr_plan;
+	for i in *_plan;do
+		rm -f "$i" "${i%_plan}"
+	done
 	rc_plan=0
 }
 

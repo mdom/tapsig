@@ -26,6 +26,22 @@ EOI
 
 tap false_and_stderr
 
+name file_is
+
+file_is foo <<EOI
+foo
+EOI
+
+tap sh -c 'echo foo > foo'
+
+name "file_is not identical"
+
+file_is foo <<EOI
+foo
+EOI
+
+tap sh -c 'echo bar > foo'
+
 done_testing
 EOF
 
@@ -33,8 +49,14 @@ stdout_is <<EOF
 ok 1 true
 ok 2 false
 not ok 3 not ok
--ok 3 false and stderr
-1..4
+ok 4 false and stderr
+ok 5 file_is
+# 1c1
+# < foo
+# ---
+# > bar
+not ok 6 file_is not identical
+1..6
 EOF
 
 tap "$current_dir/tapsig" tapsig01
