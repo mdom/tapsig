@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH=.:$PATH
+PATH=$(pwd):$PATH
 
 plan=0
 rc_plan=0
