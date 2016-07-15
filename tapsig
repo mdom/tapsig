@@ -116,6 +116,7 @@ clean_up(){
 		rm -f "$i" "${i%_plan}"
 	done
 	rc_plan=0
+	name=""
 }
 
 if [ -e "$1" ];then
