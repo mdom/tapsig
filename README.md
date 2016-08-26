@@ -80,6 +80,14 @@ done_testing
 
 Calls _COMMAND_ and checks the predeclared expectations.
 
+### ok
+
+Declare a test as passing without calling tap.
+
+### not_ok
+
+Declare a test as failing without calling tap.
+
 ### done\_testing
 
 Declares the end of tests. _tapsig_ will fail if this function isn't

@@ -48,6 +48,11 @@ tap true
 todo bar
 tap false
 
+name "exposed ok"
+ok
+name "exposed not_ok"
+not_ok
+
 done_testing
 EOF
 
@@ -64,7 +69,9 @@ ok 5 file_is
 not ok 6 file_is not identical
 ok 7 # TODO foo
 not ok 8 # TODO bar
-1..8
+ok 9 exposed ok
+not ok 10 exposed not_ok
+1..10
 EOF
 
 tap "$current_dir/tapsig" tapsig01

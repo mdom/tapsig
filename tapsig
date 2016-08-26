@@ -7,10 +7,20 @@ rc_plan=0
 tapsig_state="running"
 
 ok(){
-	printf "ok %i%s%s\n" "$plan" "${name:+ $name}" "${todo:+ # TODO $todo}"
+	plan=$(( plan + 1 ))
+	_ok "$@"
 }
 
 not_ok(){
+	plan=$(( plan + 1 ))
+	_not_ok "$@"
+}
+
+_ok(){
+	printf "ok %i%s%s\n" "$plan" "${name:+ $name}" "${todo:+ # TODO $todo}"
+}
+
+_not_ok(){
 	printf "not ok %i%s%s\n" "$plan" "${name:+ $name}" "${todo:+ # TODO $todo}"
 }
 
@@ -39,8 +49,8 @@ check_expections(){
 	if [ "$plan" != 0 ];then
 		test_files &&
 		[ "${rc-0}" -eq "$rc_plan" ] &&
-		ok ||
-		not_ok
+		_ok ||
+		_not_ok
 	fi
 }
 
