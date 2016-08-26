@@ -128,20 +128,22 @@ clean_up(){
 }
 
 if [ -e "$1" ];then
-	current_dir=$(pwd)
-	work_dir="$HOME/.tapsig.$$"
-	if ! mkdir "$work_dir";then
-		printf "Can't create working directory %s.\n" "$work_dir" >&2
+	TAPSIG_ORIG_DIR=$(pwd)
+	TAPSIG_WORK_DIR="$HOME/.tapsig.$$"
+	if ! mkdir "$TAPSIG_WORK_DIR";then
+		printf "Can't create working directory %s.\n" "$TAPSIG_WORK_DIR" >&2
 		exit 1
 	fi
-	if ! cd "$work_dir";then
-		printf "Can't cd into working directory %s.\n" "$work_dir" >&2
+	if ! cd "$TAPSIG_WORK_DIR";then
+		printf "Can't cd into working directory %s.\n" "$TAPSIG_WORK_DIR" >&2
 		exit 1
 	fi
 
-	. "$current_dir/$1"
+	cd "$TAPSIG_WORK_DIR"
+	. "$TAPSIG_ORIG_DIR/$1"
+	cd "$TAPSIG_ORIG_DIR"
 
-	rm -R "$work_dir"
+	rm -R "$TAPSIG_WORK_DIR"
 
 	if [ "$tapsig_state" = "done" ];then
 		printf "1..%s\n" "$plan"
