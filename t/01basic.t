@@ -24,7 +24,7 @@ stderr_is <<EOI
 foo
 EOI
 
-tap false_and_stderr
+tap ./false_and_stderr
 
 name file_is
 
@@ -74,6 +74,6 @@ not ok 10 exposed not_ok
 1..10
 EOF
 
-tap "$current_dir/tapsig" tapsig01
+tap tapsig tapsig01
 
 done_testing
