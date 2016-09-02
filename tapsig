@@ -87,12 +87,7 @@ tap(){
 	if [ -n "$skip" ];then
 		printf "ok %i # SKIP $skip\n" "$plan"
 	else
-		cmd=$1
-		shift
-		if [ -e "$TAPSIG_ORIG_DIR/$cmd" ];then
-			cmd="$TAPSIG_ORIG_DIR/$cmd"
-		fi
-		"$cmd" "$@" > stdout 2> stderr
+		"$@" > stdout 2> stderr
 		rc=$?
 		check_expections
 	fi
